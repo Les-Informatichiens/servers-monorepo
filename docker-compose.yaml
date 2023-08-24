@@ -1,0 +1,25 @@
+services:
+    signaling-server:
+      build:
+        context: ./signaling-server
+      command: 
+      #ports:
+      # - 51337:51337
+      working_dir: /app
+      volumes:
+        - ./signaling-server:/app
+      env_file:
+        - ./signaling-server/.env
+
+    httpd-server:
+      build:
+        context: ./http-server
+      command: 
+      #ports:
+        # - 51337:51337
+      working_dir: /app
+      volumes:
+        - ./http-server:/app
+      env_file:
+        - ./http-server/.env
+      
