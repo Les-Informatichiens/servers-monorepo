@@ -3,8 +3,8 @@ services:
       build:
         context: ./signaling-server
       command: 
-      #ports:
-      # - 51337:51337
+      ports:
+       - 51337:51337
       working_dir: /app
       volumes:
         - ./signaling-server:/app
@@ -16,7 +16,8 @@ services:
         context: ./http-server
       command: 
       #ports:
-        # - 51337:51337
+        # - 80:80
+        # - 443:443
       working_dir: /app
       volumes:
         - ./http-server:/app
