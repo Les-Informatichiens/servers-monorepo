@@ -7,6 +7,8 @@ services:
       working_dir: /app
       volumes:
         - ./signaling-server:/app
+        - /etc/letsencrypt/live/informatichiens.com/fullchain.pem:/etc/ssl/fullchain.pem
+        - /etc/letsencrypt/live/informatichiens.com/privkey.pem:/etc/ssl/privkey.pem
       env_file:
         - ./signaling-server/.env
 
