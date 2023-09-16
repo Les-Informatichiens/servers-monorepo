@@ -2,7 +2,6 @@ services:
     signaling-server:
       build:
         context: ./signaling-server
-      command: 
       ports:
        - 51337:51337
       working_dir: /app
@@ -14,10 +13,9 @@ services:
     httpd-server:
       build:
         context: ./http-server
-      command: 
-      #ports:
-        # - 80:80
-        # - 443:443
+      ports:
+        - 80:80
+        - 443:443
       working_dir: /app
       volumes:
         - ./http-server:/app
