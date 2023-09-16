@@ -56,13 +56,13 @@ async def handle_websocket(websocket, path):
 
 async def main():
     # Usage: ./server.py [[host:]port] [SSL certificate file]
-    ssl_cert = sys.argv[2] if len(sys.argv) > 2 else None
+    ssl_cert = os.environ['SSL_CERT']
 
     endpoint = os.environ['IP'] + ":" + os.environ['PORT']
 
     if ssl_cert:
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        ssl_context.load_cert_chain(ssl_cert)
+        ssl_context.load_cert_chain(ssl_cert, keyfile=os.environ['KEY_FILE'])
     else:
         ssl_context = None
 
@@ -71,7 +71,6 @@ async def main():
 
     server = await websockets.serve(handle_websocket, host, int(port), ssl=ssl_context)
     await server.wait_closed()
-
 
 if __name__ == '__main__':
     asyncio.run(main())
