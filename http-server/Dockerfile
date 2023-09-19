@@ -1,6 +1,8 @@
 FROM httpd:2.4.57
 
 COPY ./my-httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY ./my-httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
+
 COPY ./public-html/ /usr/local/apache2/htdocs/
 
 RUN sed -i \
