@@ -1,27 +1,27 @@
 services:
-    signaling-server:
-      build:
-        context: ./signaling-server
-      ports:
-       - 51337:51337
-      working_dir: /app
-      volumes:
-        - ./signaling-server:/app
-        - /etc/letsencrypt/live/informatichiens.com/fullchain.pem:/etc/ssl/fullchain.pem
-        - /etc/letsencrypt/live/informatichiens.com/privkey.pem:/etc/ssl/privkey.pem
-      env_file:
-        - ./signaling-server/.env
+  signaling-server:
+    build:
+      context: ./signaling-server
+    ports:
+      - ${PORT}:${PORT}
+    working_dir: /app
+    volumes:
+      - ./signaling-server:/app
+      - ${SSL_CERT_PATH}:${SSL_CERT_PATH}
+      - ${SSL_KEY_PATH}:${SSL_KEY_PATH}
+    env_file:
+      - .env
 
-    httpd-server:
-      build:
-        context: ./http-server
-      ports:
-        - 80:80
-        - 443:443
-      working_dir: /app
-      volumes:
-        - /etc/letsencrypt/live/informatichiens.com/fullchain.pem:/usr/local/apache2/conf/server.crt
-        - /etc/letsencrypt/live/informatichiens.com/privkey.pem:/usr/local/apache2/conf/server.key
-        - ./http-server:/app
-      env_file:
-        - ./http-server/.env
+  httpd-server:
+    build:
+      context: ./http-server
+    ports:
+      - 80:80
+      - 443:443
+    working_dir: /app
+    volumes:
+      - ${SSL_CERT_PATH}:/usr/local/apache2/conf/server.crt
+      - ${SSL_KEY_PATH}:/usr/local/apache2/conf/server.key
+      - ./http-server:/app
+    env_file:
+      - .env

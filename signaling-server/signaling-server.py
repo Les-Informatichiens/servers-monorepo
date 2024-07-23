@@ -56,13 +56,13 @@ async def handle_websocket(websocket, path):
 
 async def main():
     # Usage: ./server.py [[host:]port] [SSL certificate file]
-    ssl_cert = "/etc/ssl/fullchain.pem"
+    ssl_cert = os.getenv('SSL_CERT_PATH')
 
     endpoint = os.environ['IP'] + ":" + os.environ['PORT']
 
     if ssl_cert:
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        ssl_context.load_cert_chain(ssl_cert, keyfile="/etc/ssl/privkey.pem")
+        ssl_context.load_cert_chain(ssl_cert, keyfile=os.getenv('SSL_KEY_PATH'))
     else:
         print('No SSL Certificate')
         return 1
